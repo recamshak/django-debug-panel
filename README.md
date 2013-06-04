@@ -10,11 +10,12 @@ Installation
 1. Install and configure [Django Debug Toolbar](https://github.com/django-debug-toolbar/django-debug-toolbar>)
 
 2. Add `debug_panel` to your `INSTALLED_APPS` setting:
-
+    ```python
     INSTALLED_APPS = (
         ...
         'debug_panel',
     )
+    ```
 
 3. Run `python manage.py syncdb` to create the table that store debug information
 

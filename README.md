@@ -1,4 +1,22 @@
-django-debug-panel
+==================
+Django Debug Panel
 ==================
 
-django-debug-toolbar in WebKit DevTools. Works fine with background Ajax requests and non-HTML responses.
+Django Debug Toolbar inside WebKit DevTools. Works fine with background AJAX requests and non-HTML responses.
+Great for single-page applications and other AJAX intensive web applications.
+
+Installation
+============
+
+#. Install and configure `Django Debug Toolbar <https://github.com/django-debug-toolbar/django-debug-toolbar>`_
+
+#. Add ``debug_panel`` to your ``INSTALLED_APPS`` setting::
+
+       INSTALLED_APPS = (
+           ...
+           'debug_panel',
+       )
+
+#. Run ``python manage.py syncdb`` to create the table that store debug information
+
+#. Install the Chrome extension Django-panel

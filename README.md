@@ -8,15 +8,15 @@ Great for single-page applications and other AJAX intensive web applications.
 Installation
 ============
 
-#. Install and configure `Django Debug Toolbar <https://github.com/django-debug-toolbar/django-debug-toolbar>`_
+1. Install and configure [Django Debug Toolbar](https://github.com/django-debug-toolbar/django-debug-toolbar>)
 
-#. Add ``debug_panel`` to your ``INSTALLED_APPS`` setting::
+2. Add `debug_panel` to your `INSTALLED_APPS` setting::
 
        INSTALLED_APPS = (
            ...
            'debug_panel',
        )
 
-#. Run ``python manage.py syncdb`` to create the table that store debug information
+3. Run `python manage.py syncdb` to create the table that store debug information
 
-#. Install the Chrome extension Django-panel
+4. Install the Chrome extension Django-panel

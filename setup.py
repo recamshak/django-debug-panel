@@ -1,8 +1,9 @@
+# coding: utf-8
 from distutils.core import setup
 
 setup(
     name='django-debug-panel',
-    version='0.5.0',
+    version='0.5.1',
     author='Joël Billaud',
     author_email='jbillaud@gmail.com',
     packages=['debug_panel'],

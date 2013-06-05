@@ -21,7 +21,7 @@ Installation
         'debug_panel',
     )
 
-#. Add ``debug_panel.urls`` to your ``urls.py`` file:
+#. Add ``debug_panel.urls`` to your ``urls.py`` file::
 
     urlpatterns = patterns('',
         # ...

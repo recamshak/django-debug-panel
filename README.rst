@@ -10,6 +10,10 @@ Installation
 
 #. Install and configure `Django Debug Toolbar <https://github.com/django-debug-toolbar/django-debug-toolbar>`_
 
+#. Install `Django Debug Panel`::
+
+    pip install django-debug-panel
+
 #. Add ``debug_panel`` to your ``INSTALLED_APPS`` setting::
 
     INSTALLED_APPS = (

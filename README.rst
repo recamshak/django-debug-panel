@@ -21,14 +21,6 @@ Installation
         'debug_panel',
     )
 
-#. Add ``debug_panel.urls`` to your ``urls.py`` file::
-
-    urlpatterns = patterns('',
-        # ...
-        url(r'', include('debug_panel.urls')),
-        # ...
-    )
-
 #. Run ``python manage.py syncdb`` to create the table that store debug information
 
 #. Install the Chrome extension Django-panel

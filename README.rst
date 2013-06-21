@@ -23,4 +23,4 @@ Installation
 
 #. Run ``python manage.py syncdb`` to create the table that store debug information
 
-#. Install the Chrome extension Django-panel
+#. Install the Chrome extension `Django Debug Panel <https://chrome.google.com/webstore/detail/django-debug-panel/nbiajhhibgfgkjegbnflpdccejocmbbn>`_

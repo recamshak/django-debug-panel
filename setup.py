@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='django-debug-panel',
-    version='0.5.5',
+    version='0.5.6',
     author='Joël Billaud',
     author_email='jbillaud@gmail.com',
     packages=['debug_panel'],

@@ -1,12 +1,13 @@
 # coding: utf-8
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='django-debug-panel',
-    version='0.5.6',
+    version='0.5.8',
     author='Joël Billaud',
     author_email='jbillaud@gmail.com',
     packages=['debug_panel'],
+    include_package_data=True,
     url='https://github.com/recamshak/django-debug-panel',
     license='BSD',
     description='django-debug-toolbar in WebKit DevTools. Works fine with background Ajax requests and non-HTML responses',

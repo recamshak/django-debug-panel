@@ -1,7 +1,11 @@
-from .models import DebugData
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from .cache import cache
+from django.shortcuts import render_to_response
 
-def debug_data(request, id):
-	html = get_object_or_404(DebugData, id=id).data
-	return HttpResponse(html, content_type="text/html")
+def debug_data(request, cache_key):
+    html = cache.get(cache_key)
+
+    if html is None:
+        return render_to_response('debug-data-unavailable.html')
+
+    return HttpResponse(html, content_type="text/html")

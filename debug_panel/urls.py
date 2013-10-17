@@ -1,8 +1,8 @@
 """
 URLpatterns for the debug toolbar.
 
-These should not be loaded explicitly; the debug toolbar middleware will patch
-this into the urlconf for the request.
+These should not be loaded explicitly; It is used internally by the
+debug-panel application.
 """
 try:
     from django.conf.urls import patterns, url
@@ -12,5 +12,5 @@ except ImportError:  # django < 1.4
 _PREFIX = '__debug__'
 
 urlpatterns = patterns('debug_panel.views',
-    url(r'^%s/data/(?P<id>\d+)/$' % _PREFIX, 'debug_data', name='debug_data'),
+    url(r'^%s/data/(?P<cache_key>\d+\.\d+)/$' % _PREFIX, 'debug_data', name='debug_data'),
 )

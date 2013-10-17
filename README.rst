@@ -21,6 +21,26 @@ Installation
         'debug_panel',
     )
 
-#. Run ``python manage.py syncdb`` to create the table that store debug information
+#. All the debug data of a request are stored into the cache backend ``debug-panel``
+   if available. Otherwise, the ``default`` backend is used, and finally if no caches are
+   defined it will fallback to a local memory cache.
+   You might want to configure the ``debug-panel`` cache in your settings.py::
+
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        },
+
+        # this cache backend will be used by django-debug-panel
+        'debug-panel': {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'LOCATION': '/var/tmp/debug-panel-cache',
+            'TIMEOUT': 300,
+            'OPTIONS': {
+                'MAX_ENTRIES': 200
+            }
+        }
+    }
 
 #. Install the Chrome extension `Django Debug Panel <https://chrome.google.com/webstore/detail/django-debug-panel/nbiajhhibgfgkjegbnflpdccejocmbbn>`_

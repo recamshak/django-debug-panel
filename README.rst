@@ -10,7 +10,7 @@ Installation
 
 #. Install and configure `Django Debug Toolbar <https://github.com/django-debug-toolbar/django-debug-toolbar>`_
 
-#. Install `Django Debug Panel`::
+#. Install Django Debug Panel::
 
     pip install django-debug-panel
 
@@ -21,7 +21,25 @@ Installation
         'debug_panel',
     )
 
-#. All the debug data of a request are stored into the cache backend ``debug-panel``
+#. Replace the Django Debug Toolbar middleware with the Django Debug Panel one. Replace::
+
+    MIDDLEWARE_CLASSES = (
+        ...
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        ...
+    )
+
+   with::
+
+    MIDDLEWARE_CLASSES = (
+        ...
+        'debug_panel.middleware.DebugPanelMiddleware',
+        ...
+    )
+
+
+#. (Optional) Configure your cache.
+   All the debug data of a request are stored into the cache backend ``debug-panel``
    if available. Otherwise, the ``default`` backend is used, and finally if no caches are
    defined it will fallback to a local memory cache.
    You might want to configure the ``debug-panel`` cache in your settings.py::
@@ -36,7 +54,6 @@ Installation
         'debug-panel': {
             'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
             'LOCATION': '/var/tmp/debug-panel-cache',
-            'TIMEOUT': 300,
             'OPTIONS': {
                 'MAX_ENTRIES': 200
             }

@@ -1,5 +1,5 @@
 """
-URLpatterns for the debug toolbar.
+URLpatterns for the debug panel.
 
 These should not be loaded explicitly; It is used internally by the
 debug-panel application.

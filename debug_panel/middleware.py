@@ -53,7 +53,7 @@ class DebugPanelMiddleware(DebugToolbarMiddleware):
         __traceback_hide__ = True
         ident = threading.current_thread().ident
         toolbar = self.__class__.debug_toolbars.get(ident)
-        if not toolbar or request.is_ajax() or getattr(response, 'streaming', False):
+        if not toolbar:
             return response
         if isinstance(response, HttpResponseRedirect):
             if not toolbar.config['INTERCEPT_REDIRECTS']:

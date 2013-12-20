@@ -1,0 +1,2 @@
+# installing itself should install all the dependencies
+-e .

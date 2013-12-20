@@ -3,8 +3,8 @@ from setuptools import setup
 
 setup(
     name='django-debug-panel',
-    version='0.7.0',
-    author='Joël Billaud',
+    version='0.7.1',
+    author=u'Joël Billaud',
     author_email='jbillaud@gmail.com',
     packages=['debug_panel'],
     include_package_data=True,

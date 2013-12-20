@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from .cache import cache
+from debug_panel.cache import cache
 from django.shortcuts import render_to_response
 from django.views.decorators.clickjacking import xframe_options_exempt
 

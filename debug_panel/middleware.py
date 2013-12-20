@@ -7,10 +7,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 import threading
 import time
-from .cache import cache
+
+from debug_panel.cache import cache
 
 # the urls patterns that concern only the debug_panel application
-import urls as debug_panel_urlconf
+import debug_panel.urls
 
 
 class DebugPanelMiddleware(DebugToolbarMiddleware):
@@ -31,7 +32,7 @@ class DebugPanelMiddleware(DebugToolbarMiddleware):
         """
 
         try:
-            res = resolve(request.path, urlconf=debug_panel_urlconf)
+            res = resolve(request.path, urlconf=debug_panel.urls)
         except Resolver404:
             return super(DebugPanelMiddleware, self).process_request(request)
 
@@ -75,7 +76,7 @@ class DebugPanelMiddleware(DebugToolbarMiddleware):
         cache.set(cache_key, toolbar.render_toolbar())
 
         response['X-debug-data-url'] = request.build_absolute_uri(
-            reverse('debug_data', urlconf=debug_panel_urlconf, kwargs={'cache_key': cache_key}))
+            reverse('debug_data', urlconf=debug_panel.urls, kwargs={'cache_key': cache_key}))
 
         del self.__class__.debug_toolbars[ident]
         return response

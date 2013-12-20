@@ -1,8 +1,5 @@
 """Django settings for tests."""
 
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
 DEBUG = True
 # Quick-start development settings - unsuitable for production
 
@@ -41,14 +38,6 @@ ROOT_URLCONF = 'tests.urls'
 
 STATIC_URL = '/static/'
 
-# Cache and database
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -60,5 +49,5 @@ DATABASES = {
 
 DEBUG_TOOLBAR_CONFIG = {
     # Django's test client sets wsgi.multiprocess to True inappropriately
-    'RENDER_PANELS': False,
+    'RENDER_PANELS': True,
 }

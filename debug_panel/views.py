@@ -10,4 +10,4 @@ def debug_data(request, cache_key):
     if html is None:
         return render_to_response('debug-data-unavailable.html')
 
-    return HttpResponse(html, content_type="text/html")
+    return HttpResponse(html, content_type="text/html; charset=utf-8")

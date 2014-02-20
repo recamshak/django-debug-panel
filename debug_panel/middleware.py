@@ -1,25 +1,35 @@
 """
 Debug Panel middleware
 """
-from debug_toolbar.middleware import DebugToolbarMiddleware
-from django.core.urlresolvers import reverse, resolve, Resolver404
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
 import threading
 import time
 
+from django.core.urlresolvers import reverse, resolve, Resolver404
+from django.conf import settings
 from debug_panel.cache import cache
+import debug_toolbar.middleware
 
 # the urls patterns that concern only the debug_panel application
 import debug_panel.urls
 
+def show_toolbar(request):
+    """
+    Default function to determine whether to show the toolbar on a given page.
+    """
+    if request.META.get('REMOTE_ADDR', None) not in settings.INTERNAL_IPS:
+        return False
 
-class DebugPanelMiddleware(DebugToolbarMiddleware):
+    return bool(settings.DEBUG)
+
+
+debug_toolbar.middleware.show_toolbar = show_toolbar
+
+
+class DebugPanelMiddleware(debug_toolbar.middleware.DebugToolbarMiddleware):
     """
     Middleware to set up Debug Panel on incoming request and render toolbar
     on outgoing response.
     """
-
 
     def process_request(self, request):
         """
@@ -41,42 +51,20 @@ class DebugPanelMiddleware(DebugToolbarMiddleware):
 
     def process_response(self, request, response):
         """
-        Since there is no hook to intercept and change rendering of the default
-        debug_toolbar middleware, this is mostly a copy the original debug_toolbar
-        middleware.
-
-        Instead of rendering the debug_toolbar inside the response HTML, it's stored
-        in the Django cache.
+        Store the DebugToolbarMiddleware rendered toolbar into a cache store.
 
         The data stored in the cache are then reachable from an URL that is appened
         to the HTTP response header under the 'X-debug-data-url' key.
         """
-        __traceback_hide__ = True
-        ident = threading.current_thread().ident
-        toolbar = self.__class__.debug_toolbars.get(ident)
-        if not toolbar:
-            return response
-        if isinstance(response, HttpResponseRedirect):
-            if not toolbar.config['INTERCEPT_REDIRECTS']:
-                return response
-            redirect_to = response.get('Location', None)
-            if redirect_to:
-                cookies = response.cookies
-                response = render(
-                    request,
-                    'debug_toolbar/redirect.html',
-                    {'redirect_to': redirect_to}
-                )
-                response.cookies = cookies
+        toolbar = self.__class__.debug_toolbars.get(threading.current_thread().ident, None)
 
-        for panel in toolbar.panels:
-            panel.process_response(request, response)
+        response = super(DebugPanelMiddleware, self).process_response(request, response)
 
-        cache_key = "%f" % time.time()
-        cache.set(cache_key, toolbar.render_toolbar())
+        if toolbar:
+            cache_key = "%f" % time.time()
+            cache.set(cache_key, toolbar.render_toolbar())
 
-        response['X-debug-data-url'] = request.build_absolute_uri(
-            reverse('debug_data', urlconf=debug_panel.urls, kwargs={'cache_key': cache_key}))
+            response['X-debug-data-url'] = request.build_absolute_uri(
+                reverse('debug_data', urlconf=debug_panel.urls, kwargs={'cache_key': cache_key}))
 
-        del self.__class__.debug_toolbars[ident]
         return response

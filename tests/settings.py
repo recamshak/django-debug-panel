@@ -44,10 +44,4 @@ DATABASES = {
     }
 }
 
-
-# Debug Toolbar configuration
-
-DEBUG_TOOLBAR_CONFIG = {
-    # Django's test client sets wsgi.multiprocess to True inappropriately
-    'RENDER_PANELS': True,
-}
+DEBUG_TOOLBAR_PATCH_SETTINGS = True

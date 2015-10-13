@@ -61,6 +61,11 @@ class DebugPanelMiddleware(debug_toolbar.middleware.DebugToolbarMiddleware):
         response = super(DebugPanelMiddleware, self).process_response(request, response)
 
         if toolbar:
+            # for django-debug-toolbar >= 1.4
+            for panel in reversed(toolbar.enabled_panels):
+                if hasattr(panel, 'generate_stats'):
+                    panel.generate_stats(request, response)
+
             cache_key = "%f" % time.time()
             cache.set(cache_key, toolbar.render_toolbar())
 
